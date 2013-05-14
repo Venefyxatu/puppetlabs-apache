@@ -47,7 +47,7 @@ Puppet::Type.type(:a2mod).provide(:gentoo, :parent => Puppet::Provider) do
   def self.modules
     if @modules.length <= 0
       # Locate the APACHE_OPTS variable
-      records = filetype.read.split(/\n/)
+      records = @filetype.read.split(/\n/)
       apache2_opts = records.grep(/^\s*APACHE2_OPTS=/).first
 
       # Extract all defines
@@ -103,13 +103,13 @@ Puppet::Type.type(:a2mod).provide(:gentoo, :parent => Puppet::Provider) do
       apache2_opts = %Q{APACHE2_OPTS="#{opts}"}
       Puppet.debug("Writing back \"#{apache2_opts}\" to #{conf_file}")
 
-      records = filetype.read.split(/\n/)
+      records = @filetype.read.split(/\n/)
 
       opts_index = records.find_index {|i| i.match(/^\s*APACHE2_OPTS/)}
       records[opts_index] = apache2_opts
 
-      filetype.backup
-      filetype.write(records.join("\n"))
+      @filetype.backup
+      @filetype.write(records.join("\n"))
       @modules = mod_list
     end
   end
