@@ -42,6 +42,7 @@
 define apache::vhost(
     $port,
     $docroot,
+    $mediaroot        = false,
     $docroot_owner      = 'root',
     $docroot_group      = 'root',
     $serveradmin        = false,
@@ -129,7 +130,7 @@ define apache::vhost(
       File[$docroot],
       File[$logroot],
     ],
-    notify  => Service['httpd'],
+    notify  => Service["${apache::params::service_name}"],
   }
 
   if $configure_firewall {

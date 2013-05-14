@@ -2,6 +2,8 @@
 # Default template in module puppetlabs-apache
 # Managed by Puppet
 # ************************************
+#
+Listen <%= port %>
 
 NameVirtualHost <%= vhost_name %>:<%= port %>
 <% if wsgi_python_home %>

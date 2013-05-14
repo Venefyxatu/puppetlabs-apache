@@ -36,6 +36,6 @@ define apache::mod (
     lib        => $lib,
     identifier => $identifier,
     require    => Package['httpd'],
-    notify     => Service['httpd'],
+    notify     => Service["${apache::params::service_name}"],
   }
 }

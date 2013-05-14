@@ -42,7 +42,7 @@ define apache::vhost::redirect (
     group   => 'root',
     mode    => '0755',
     require => Package['httpd'],
-    notify  => Service['httpd'],
+    notify  => Service["${apache::params::service_name}"],
   }
 
   if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {

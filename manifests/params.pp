@@ -20,7 +20,7 @@
 class apache::params {
 
   $ssl           = true
-  $template      = 'apache/vhost-default.conf.erb'
+  $template      = '/apache/vhost-default.conf.erb'
   $priority      = '25'
   $servername    = ''
   $serveraliases = ''
@@ -35,6 +35,7 @@ class apache::params {
     $user                  = 'apache'
     $group                 = 'apache'
     $apache_name           = 'httpd'
+    $service_name  = 'httpd'
     $php_package           = 'php'
     $mod_passenger_package = 'mod_passenger'
     $mod_python_package    = 'mod_python'
@@ -69,6 +70,7 @@ class apache::params {
     $user                  = 'www-data'
     $group                 = 'www-data'
     $apache_name           = 'apache2'
+    $service_name  = 'httpd'
     $php_package           = 'libapache2-mod-php5'
     $mod_passenger_package = 'libapache2-mod-passenger'
     $mod_python_package    = 'libapache2-mod-python'
@@ -76,6 +78,31 @@ class apache::params {
     $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
     $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
     $vdir                  = '/etc/apache2/sites-enabled/'
+    $proxy_modules         = ['proxy', 'proxy_http']
+    $mod_packages          = {
+      'dev'        => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],
+      'fcgid'      => 'libapache2-mod-fcgid',
+      'passenger'  => 'libapache2-mod-passenger',
+      'perl'       => 'libapache2-mod-perl2',
+      'php5'       => 'libapache2-mod-php5',
+      'proxy_html' => 'libapache2-mod-proxy-html',
+      'python'     => 'libapache2-mod-python',
+      'wsgi'       => 'libapache2-mod-wsgi',
+    }
+    $mod_libs              = {}
+    $mod_identifiers       = {}
+  } elsif $::operatingsystem == 'Gentoo' {
+    $user                  = 'apache'
+    $group                 = 'apache'
+    $apache_name           = 'apache'
+    $service_name          = 'apache2'
+    $php_package           = 'libapache2-mod-php5'
+    $mod_passenger_package = 'libapache2-mod-passenger'
+    $mod_python_package    = 'libapache2-mod-python'
+    $mod_wsgi_package      = 'libapache2-mod-wsgi'
+    $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
+    $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
+    $vdir                  = '/etc/apache2/vhosts.d/'
     $proxy_modules         = ['proxy', 'proxy_http']
     $mod_packages          = {
       'dev'        => ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev'],

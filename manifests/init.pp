@@ -29,9 +29,9 @@ class apache (
   # true/false is sufficient for both ensure and enable
   validate_bool($service_enable)
 
-  service { 'httpd':
+  service { "${apache::params::service_name}":
     ensure    => $service_enable,
-    name      => $apache::params::apache_name,
+    name      => $apache::params::service_nam,
     enable    => $service_enable,
     subscribe => Package['httpd'],
   }
@@ -41,7 +41,7 @@ class apache (
     path    => $apache::params::vdir,
     recurse => true,
     purge   => $purge_vdir,
-    notify  => Service['httpd'],
+    notify  => Service["${apache::params::service_name}"],
     require => Package['httpd'],
   }
 
@@ -54,7 +54,7 @@ class apache (
     file { "${apache::params::conf_dir}/${apache::params::conf_file}":
       ensure  => present,
       content => template("apache/${apache::params::conf_file}.erb"),
-      notify  => Service['httpd'],
+      notify  => Service["${apache::params::service_name}"],
       require => Package['httpd'],
     }
     if $default_mods == true {
