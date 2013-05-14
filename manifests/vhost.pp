@@ -89,7 +89,7 @@ define apache::vhost(
     $ensure             = 'present',
     $wsgi_python_home   = false,
     $wsgi_script_url    = '/',
-    $wsgi_script        = false
+    $wsgi_script        = false,
     $access_log_file    = undef,
     $access_log_pipe    = undef,
     $access_log_format  = undef,
