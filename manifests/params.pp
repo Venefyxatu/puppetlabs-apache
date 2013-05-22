@@ -89,6 +89,7 @@ class apache::params {
     $ssl_certs_dir    = '/etc/ssl/certs'
     $passenger_root   = '/usr'
     $passenger_ruby   = '/usr/bin/ruby'
+    $mod_packages    = {
       'wsgi'       => 'libapache2-mod-wsgi',
     }
     $mod_libs              = {}
@@ -103,8 +104,17 @@ class apache::params {
     $mod_python_package    = 'libapache2-mod-python'
     $mod_wsgi_package      = 'libapache2-mod-wsgi'
     $mod_auth_kerb_package = 'libapache2-mod-auth-kerb'
+    $confd_dir             = '/etc/apache2/conf.d'
+    $conf_dir              = '/etc/apache2'
+    $conf_file             = 'httpd.conf'
+    $httpd_dir             = '/usr/lib64/apache2'
+    $logroot               = '/var/log/apache2'
+    $lib_path              = 'modules'
+    $mod_dir               = '/etc/apache2/modules.d'
+    $vhost_dir             = '/etc/apache2/vhosts.d'
+    $ports_file            = '/etc/apache2/ports.conf'
     $apache_dev            = ['libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev']
-    $vdir                  = '/etc/apache2/vhosts.d/'
+    $vdir                  = '/etc/apache2/vhosts.d'
     $mod_packages     = {
       'auth_kerb'  => 'libapache2-mod-auth-kerb',
       'fcgid'      => 'libapache2-mod-fcgid',

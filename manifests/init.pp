@@ -35,10 +35,6 @@ class apache (
   $mpm_module           = $apache::params::mpm_module,
 ) inherits apache::params {
 
-  package { 'httpd':
-    ensure => installed,
-    name   => $apache::params::apache_name,
-  }
 
   validate_bool($default_mods)
   validate_bool($default_vhost)
@@ -61,11 +57,16 @@ class apache (
     require => Package['httpd']
   }
 
+  package { 'httpd':
+    ensure => installed,
+    name   => $apache::params::apache_name,
+  }
+
   user { $user:
     ensure  => present,
     gid     => $group,
     require => Package['httpd'],
-    before  => Service['httpd'],
+    before  => Service["${apache::params::service_name}"],
   }
 
   service { "${apache::params::service_name}":
@@ -96,7 +97,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Service['httpd'],
+      notify  => Service["${apache::params::service_name}"],
       require => Package['httpd'],
     }
   }
@@ -106,7 +107,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Service['httpd'],
+      notify  => Service["${apache::params::service_name}"],
       require => Package['httpd'],
     }
   }
@@ -116,7 +117,7 @@ class apache (
       ensure  => directory,
       recurse => true,
       purge   => $purge_configs,
-      notify  => Service['httpd'],
+      notify  => Service["${apache::params::service_name}"],
       require => Package['httpd'],
     }
   }
@@ -125,7 +126,7 @@ class apache (
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
-    notify => Service['httpd'],
+    notify => Service["${apache::params::service_name}"],
   }
   concat::fragment { "Apache ports header":
     target  => $ports_file,
@@ -145,6 +146,14 @@ class apache (
       'redhat': {
         $docroot              = '/var/www/html'
         $pidfile              = 'run/httpd.pid'
+        $error_log            = 'error_log'
+        $error_documents_path = '/var/www/error'
+        $scriptalias          = '/var/www/cgi-bin'
+        $access_log_file      = 'access_log'
+      }
+      'Linux': {
+        $docroot              = '/var/www'
+        $pidfile              = '/var/run/apache2.pid'
         $error_log            = 'error_log'
         $error_documents_path = '/var/www/error'
         $scriptalias          = '/var/www/cgi-bin'

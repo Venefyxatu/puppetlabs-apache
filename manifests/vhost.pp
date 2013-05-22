@@ -70,6 +70,7 @@ define apache::vhost(
     $serveradmin        = false,
     $configure_firewall = true,
     $ssl                = false,
+    $template           = $apache::params::template,
     $ssl_cert           = $apache::default_ssl_cert,
     $ssl_key            = $apache::default_ssl_key,
     $ssl_chain          = $apache::default_ssl_chain,
@@ -346,7 +347,7 @@ define apache::vhost(
   file { "${priority_real}-${filename}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
-    content => template('apache/vhost.conf.erb'),
+    content => template($template),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
