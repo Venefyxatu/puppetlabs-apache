@@ -99,7 +99,6 @@ class apache::params {
     $group                 = 'apache'
     $apache_name           = 'apache'
     $service_name          = 'apache2'
-    $php_package           = 'libapache2-mod-php5'
     $mod_passenger_package = 'libapache2-mod-passenger'
     $mod_python_package    = 'libapache2-mod-python'
     $mod_wsgi_package      = 'libapache2-mod-wsgi'
@@ -120,7 +119,6 @@ class apache::params {
       'fcgid'      => 'libapache2-mod-fcgid',
       'passenger'  => 'libapache2-mod-passenger',
       'perl'       => 'libapache2-mod-perl2',
-      'php5'       => 'libapache2-mod-php5',
       'proxy_html' => 'libapache2-mod-proxy-html',
       'python'     => 'libapache2-mod-python',
       'wsgi'       => 'libapache2-mod-wsgi',
